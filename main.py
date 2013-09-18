@@ -25,7 +25,7 @@ last edited: October 2011
 import sys
 from PyQt4 import QtCore, QtGui
 
-class TrayNotificationWidget(QtGui.QWidget):
+class TrayNotificationWidget(QtGui.QGraphicsView):
 
     def __init__(self):
         super(TrayNotificationWidget, self).__init__()
@@ -43,6 +43,7 @@ class TrayNotificationWidget(QtGui.QWidget):
 
         self.setToolTip('This is a <b>QWidget</b> widget')
 
+
         btn = QtGui.QPushButton('Button', self)
         btn.setToolTip('This is a <b>QPushButton</b> widget')
         btn.resize(btn.sizeHint())
@@ -51,6 +52,7 @@ class TrayNotificationWidget(QtGui.QWidget):
         cb = QtGui.QCheckBox('Set transparency', self)
         cb.move(20, 20)
         cb.toggle()
+        self.set_transparency(True)
         cb.stateChanged.connect(self.changeTransparency)
 
         self.show()
@@ -68,8 +70,10 @@ class TrayNotificationWidget(QtGui.QWidget):
         """
         if enabled:
             self.setAutoFillBackground(False)
+            self.setStyleSheet("QGraphicsView {background: transparent; border: 0px;}")
         else:
             self.setAttribute(QtCore.Qt.WA_NoSystemBackground, False)
+            self.setStyleSheet("QGraphicsView {}")
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground, enabled)
         self.repaint()
 
